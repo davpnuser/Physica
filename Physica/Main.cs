@@ -3,9 +3,11 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
-using Physica.Classes.Core;
 using Physica.Classes.Pipelines;
+using Physica.Classes.Types.TwoD;
+using Physica.Classes.Types.UI;
 using Physica.Engine;
 
 namespace Physica
@@ -19,6 +21,7 @@ namespace Physica
         private GraphicsDevice _device;
         private Renderer _renderer;
 
+        private BaseCursor _cursor;
 
         //Constructor
         public Main()
@@ -39,13 +42,16 @@ namespace Physica
         {
             _batch = new SpriteBatch(GraphicsDevice);
             _device = GraphicsDevice;
-            _renderer = new(_device,_batch);
-            BatchManager.Initialize(_batch);
+            _renderer = new(_device, _batch);
+            SetupCursor();
             SetupPipelines();
         }
 
         protected override void Update(GameTime gameTime)
         {
+            var mouse = Mouse.GetState();
+            var mouseVector = mouse.Position.ToVector2();
+            _cursor.Position = mouseVector;
             base.Update(gameTime);
         }
 
@@ -54,6 +60,13 @@ namespace Physica
             GraphicsDevice.Clear(ClearColor);
             _renderer.Render();
             base.Draw(gameTime);
+        }
+
+        private void SetupCursor()
+        {
+            _cursor = new();
+            _cursor.Texture = Content.Load<Texture2D>("Assets/Pictures/Input/Cursor");
+            RendererUI.Add(_cursor);
         }
         private void SetupPipelines()
         {

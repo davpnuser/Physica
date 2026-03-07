@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿
+// Renderer.cs
+
+using Microsoft.Xna.Framework.Graphics;
 using Physica.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Physica.Engine
 {
@@ -36,16 +38,12 @@ namespace Physica.Engine
         public void Remove(IPipeline pipeline)
             => _pipelines.Remove(pipeline);
 
-        public IPipeline GetPipeline(string PipelineName)
-        {
-            IPipeline pipeline = _pipelines.FirstOrDefault(x => x.Name == PipelineName);
-            return pipeline;
-        }
-
         public void Render()
         {
+            _batch.Begin();
             foreach (IPipeline pipeline in _pipelines)
-                pipeline.Draw();
+                pipeline.Draw(_batch);
+            _batch.End();
         }
     }
 }

@@ -1,16 +1,14 @@
 ﻿
-// UIBase.cs
+// BaseUI.cs
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
-using Physica.Classes.Core;
 using Physica.Classes.Pipelines;
 using Physica.Interfaces;
 
-namespace Physica.Classes.Types
+namespace Physica.Classes.Types.UI
 {
-    public abstract class UIBase : IRenderableUI
+    public abstract class BaseUI : IRenderableUI
     {
         // Variables
         public string Name { get; set; }
@@ -29,23 +27,15 @@ namespace Physica.Classes.Types
         }
         public Vector2 Position { get; set; } = Vector2.Zero;
         public Vector2 OriginPoint { get; set; } = Vector2.Zero;
-        public Vector2 Size { get; set; } = Vector2.Zero;
         public float Rotation { get; set; } = 0;
         public bool Visibility { get; set; } = true;
-        readonly private BatchManager _manager;
-
-
-        // Constructor
-        public UIBase()
-            => _manager = BatchManager.Instance;
 
 
         // Methods
-        public void Draw()
+        public void Draw(SpriteBatch batch)
         {
             if (!Visibility)
                 return;
-            SpriteBatch batch = _manager.Batch;
             OnDraw(batch);
         }
 

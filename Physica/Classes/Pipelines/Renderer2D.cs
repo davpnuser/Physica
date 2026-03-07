@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using Physica.Classes.Core;
 using Physica.Interfaces;
 
 namespace Physica.Classes.Pipelines
@@ -14,14 +13,7 @@ namespace Physica.Classes.Pipelines
     {
         // Variables
         public string Name { get; set; }
-        private readonly BatchManager _manager = BatchManager.Instance;
-        private readonly SpriteBatch _batch;
         private readonly static List<IRenderable2D> _renderables = [];
-
-
-        // Constructor
-        public Renderer2D()
-            => _batch = _manager.Batch;
 
 
         // Methods
@@ -31,11 +23,10 @@ namespace Physica.Classes.Pipelines
         public static void Remove(IRenderable2D renderable)
             => _renderables.Remove(renderable);
 
-        public void Draw()
+        public void Draw(SpriteBatch batch)
         {
-            _manager.Begin();
             foreach (var renderable in _renderables)
-                _batch.Draw(
+                batch.Draw(
                     renderable.Texture,
                     renderable.Position,
                     null,
@@ -46,7 +37,6 @@ namespace Physica.Classes.Pipelines
                     SpriteEffects.None,
                     renderable.LayerDepth
                 );
-            _manager.End();
         }
     }
 }

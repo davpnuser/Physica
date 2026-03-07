@@ -29,4 +29,9 @@
   <ItemGroup>
     <None Include="C:\Users\Ubeyde\source\Physica\Physica\.editorconfig" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Core\" />
+    <Folder Include="Classes\Types\Input\" />
+    <Folder Include="Content\Assets\Pictures\Input\" />
+  </ItemGroup>
 </Project>

@@ -29,7 +29,7 @@ namespace Physica.Classes.Pipelines
         public static void Remove(IRenderable3D renderable)
             => _renderables.Remove(renderable);
 
-        public void Draw()
+        public void Draw(SpriteBatch batch)
         {
             //TODO: Draw 3d objects here
         }

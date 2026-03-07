@@ -2,8 +2,7 @@
 // RendererUI.cs
 
 using System.Collections.Generic;
-
-using Physica.Classes.Core;
+using Microsoft.Xna.Framework.Graphics;
 using Physica.Interfaces;
 
 namespace Physica.Classes.Pipelines
@@ -12,7 +11,6 @@ namespace Physica.Classes.Pipelines
     {
         // Variables
         public string Name { get; set; }
-        private readonly BatchManager _manager = BatchManager.Instance;
         private readonly static List<IRenderableUI> _renderables = [];
 
 
@@ -29,12 +27,10 @@ namespace Physica.Classes.Pipelines
         public static void Reorder()
             => _renderables.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
 
-        public void Draw()
+        public void Draw(SpriteBatch batch)
         {
-            _manager.Begin();
             foreach (var renderable in _renderables)
-                renderable.Draw();
-            _manager.End();
+                renderable.Draw(batch);
         }
     }
 }

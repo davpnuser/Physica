@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+// IRenderable3D.cs
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Physica.Interfaces

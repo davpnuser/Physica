@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+// IRenderableUI.cs
+
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Physica.Interfaces
 {
@@ -8,6 +9,6 @@ namespace Physica.Interfaces
     {
         public string Name { get; set; }
         public int ZIndex { get; set; }
-        public void Draw();
+        public void Draw(SpriteBatch batch);
     }
 }

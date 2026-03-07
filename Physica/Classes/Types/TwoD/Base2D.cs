@@ -1,12 +1,14 @@
 ﻿
-// IRenderable2D.cs
+// Base2D.cs
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Physica.Interfaces
+using Physica.Interfaces;
+
+namespace Physica.Classes.Types.TwoD
 {
-    public interface IRenderable2D
+    public abstract class Base2D : IRenderable2D
     {
         public string Name { get; set; }
         public Texture2D Texture { get; set; }

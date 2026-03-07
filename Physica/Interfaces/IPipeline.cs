@@ -1,8 +1,13 @@
-﻿namespace Physica.Interfaces
+﻿
+// IPipeline.cs
+
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Physica.Interfaces
 {
-    public interface IPipeline
+    public interface IPipeline 
     {
         public string Name { get; set; }
-        void Draw();
+        void Draw(SpriteBatch batch);
     }
 }
