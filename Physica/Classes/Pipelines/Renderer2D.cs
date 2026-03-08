@@ -12,6 +12,7 @@ namespace Physica.Classes.Pipelines
     public class Renderer2D : IPipeline
     {
         // Variables
+        private static readonly List<IRenderable2D> _removequeue = [];
         public string Name { get; set; }
         private readonly static List<IRenderable2D> _renderables = [];
 
@@ -21,10 +22,17 @@ namespace Physica.Classes.Pipelines
             => _renderables.Add(renderable);
 
         public static void Remove(IRenderable2D renderable)
-            => _renderables.Remove(renderable);
+            => _removequeue.Add(renderable);
 
         public void Draw(SpriteBatch batch)
         {
+            if (_removequeue.ToArray().Length > 0)
+            {
+                foreach (IRenderable2D renderable in _removequeue)
+                    _renderables.Remove(renderable);
+                _removequeue.Clear();
+            }
+
             foreach (var renderable in _renderables)
                 batch.Draw(
                     renderable.Texture,

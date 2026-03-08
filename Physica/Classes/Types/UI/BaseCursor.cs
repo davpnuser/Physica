@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+// BaseCursor.cs
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Physica.Classes.Types.UI

@@ -4,17 +4,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Physica.Classes.Core;
 using Physica.Classes.Pipelines;
 using Physica.Classes.Types.TwoD;
 using Physica.Classes.Types.UI;
 using Physica.Engine;
+using System;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace Physica
 {
     public class Main : Game
     {
-        //Variables
+        // Variables
         private readonly Color ClearColor = Color.CornflowerBlue;
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _batch;
@@ -23,7 +25,12 @@ namespace Physica
 
         private BaseCursor _cursor;
 
-        //Constructor
+        // Debug
+        private FrameCounter _counter;
+        private BaseText _counterText;
+
+
+        // Constructor
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -32,7 +39,7 @@ namespace Physica
         }
 
 
-        //Methods
+        // Methods
         protected override void Initialize()
         {
             base.Initialize();
@@ -43,6 +50,10 @@ namespace Physica
             _batch = new SpriteBatch(GraphicsDevice);
             _device = GraphicsDevice;
             _renderer = new(_device, _batch);
+            #if DEBUG
+            Console.WriteLine("Setting up the debug suite...");
+            SetupDebug();
+            #endif
             SetupCursor();
             SetupPipelines();
         }
@@ -58,8 +69,29 @@ namespace Physica
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(ClearColor);
+
+            #if DEBUG
+            // Update FPS counter
+            _counter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _counterText.Text = ((int)_counter.CurrentFramesPerSecond).ToString();
+            #endif
             _renderer.Render();
             base.Draw(gameTime);
+        }
+
+        private void SetupDebug()
+        {
+            _counter = new();
+            _counterText = new()
+            {
+                BackgroundEnabled = true,
+                BackgroundColor = Color.Black,
+                Position = new Vector2(25, 25),
+                Font = Content.Load<SpriteFont>("Assets/Fonts/OpenSans"),
+                TextColor = Color.White,
+                ZIndex = 2
+            };
+            RendererUI.Add(_counterText);
         }
 
         private void SetupCursor()
@@ -68,6 +100,7 @@ namespace Physica
             _cursor.Texture = Content.Load<Texture2D>("Assets/Pictures/Input/Cursor");
             RendererUI.Add(_cursor);
         }
+
         private void SetupPipelines()
         {
             Renderer3D renderer3D = new(_device);

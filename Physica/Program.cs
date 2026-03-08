@@ -7,7 +7,9 @@ static extern bool AllocConsole();
 AllocConsole();
 #endif
 
-Console.WriteLine($"Physica, {DateTime.Now.ToString("yyyy")}. All rights reserved.\n" +
+//string VersionString = "Physica 1";
+
+Console.WriteLine($"Physica, {DateTime.Now:yyyy}. All rights reserved.\n" +
     "Physica is considered a \"Source-Available\" software for community trust, not \"Open-Source\" software that you can edit\nand redistribute yourself.\n" +
     "Keep that in mind as I own all rights to physica's code.");
 
