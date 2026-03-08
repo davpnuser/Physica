@@ -4,32 +4,38 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using FontStashSharp;
+
 namespace Physica.Classes.Types.UI
 {
     public class BaseText : BaseUI
     {
         // Variables
+        private DynamicSpriteFont _font;
         public BaseRectangle Background { get; private set; }
-        public SpriteFont Font { get; set; }
+        public FontSystem Font { get; set; }
         public string Text { get; set; } = string.Empty;
+        public int TextSize { get; set; } = 12;
         public Color TextColor { get; set; } = Color.White;
-        public float Scale { get; set; } = 1f;
         public bool BackgroundEnabled { get; set; } = false;
         public Color BackgroundColor {  get; set; } = Color.Black;
         public float LayerDepth { get; set; } = 0f;
+        public float CharacterSpacing { get; set; } = 0f;
+        public float LineSpacing { get; set; } = 0f;
+        public TextStyle TextStyle { get; set; } = TextStyle.None;
 
 
         // Methods
         private void DrawBackground(SpriteBatch batch)
         {
             //TODO: Improve performance and dont make MeasureString() run every frame.
+            _font = Font.GetFont(TextSize);
             Background ??= new(batch.GraphicsDevice);
             Background.Name = Name;
             Background.OriginPoint = OriginPoint;
             Background.Position = Position;
-            Background.Size = Font.MeasureString(Text);
+            Background.Size = _font.MeasureString(Text);
             Background.LayerDepth = LayerDepth;
-            Background.Scale = Scale;
             Background.Rotation = Rotation;
             Background.Color = BackgroundColor;
             Background.ZIndex = ZIndex;
@@ -43,16 +49,20 @@ namespace Physica.Classes.Types.UI
                 return;
             if (BackgroundEnabled)
                 DrawBackground(batch);
-            batch.DrawString(
-                Font,
+            _font.DrawText(
+                batch,
                 Text,
                 Position,
                 TextColor,
                 Rotation,
                 OriginPoint,
-                Scale,
-                SpriteEffects.None,
-                LayerDepth
+                null,
+                LayerDepth,
+                CharacterSpacing,
+                LineSpacing,
+                TextStyle,
+                FontSystemEffect.None,
+                0
             );
         }
     }

@@ -16,6 +16,7 @@
     <Content Include="Favicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FontStashSharp.MonoGame" Version="1.5.4" />
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.*" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
   </ItemGroup>
@@ -31,6 +32,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\Types\Input\" />
+    <Folder Include="Content\Assets\Fonts\" />
     <Folder Include="Content\Assets\Pictures\Input\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\Assets\Fonts\Calibri.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Assets\Fonts\CalibriBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Assets\Fonts\CalibriBoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Assets\Fonts\CalibriItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Assets\Fonts\CalibriLight.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Assets\Fonts\CalibriLightItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

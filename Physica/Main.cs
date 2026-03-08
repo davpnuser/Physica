@@ -1,16 +1,16 @@
 ﻿
 // Main.cs
 
+using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+
 using Physica.Classes.Core;
 using Physica.Classes.Pipelines;
-using Physica.Classes.Types.TwoD;
 using Physica.Classes.Types.UI;
 using Physica.Engine;
-using System;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace Physica
 {
@@ -18,7 +18,7 @@ namespace Physica
     {
         // Variables
         private readonly Color ClearColor = Color.CornflowerBlue;
-        private readonly GraphicsDeviceManager _graphics;
+        public readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _batch;
         private GraphicsDevice _device;
         private Renderer _renderer;
@@ -26,9 +26,9 @@ namespace Physica
         private BaseCursor _cursor;
 
         // Debug
-        private FrameCounter _counter;
+        public FrameCounter _counter;
         private BaseText _counterText;
-
+        public int PeakFPS { get; private set; } = 0;
 
         // Constructor
         public Main()
@@ -50,10 +50,10 @@ namespace Physica
             _batch = new SpriteBatch(GraphicsDevice);
             _device = GraphicsDevice;
             _renderer = new(_device, _batch);
-            #if DEBUG
+#if DEBUG
             Console.WriteLine("Setting up the debug suite...");
             SetupDebug();
-            #endif
+#endif
             SetupCursor();
             SetupPipelines();
         }
@@ -73,7 +73,9 @@ namespace Physica
             #if DEBUG
             // Update FPS counter
             _counter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            _counterText.Text = ((int)_counter.CurrentFramesPerSecond).ToString();
+            if (_counter.CurrentFramesPerSecond >= PeakFPS)
+                PeakFPS = (int)_counter.CurrentFramesPerSecond;
+            _counterText.Text = $" Cur. FPS: {(int)_counter.CurrentFramesPerSecond}\n Avg. FPS: {(int)_counter.AverageFramesPerSecond}\n Peak FPS: {PeakFPS} ";
             #endif
             _renderer.Render();
             base.Draw(gameTime);
@@ -81,17 +83,21 @@ namespace Physica
 
         private void SetupDebug()
         {
+            Console.WriteLine("Dynamically loading the calibri font file...");
+            Fonts.RegisterFont("Calibri.ttf");
             _counter = new();
             _counterText = new()
             {
                 BackgroundEnabled = true,
                 BackgroundColor = Color.Black,
                 Position = new Vector2(25, 25),
-                Font = Content.Load<SpriteFont>("Assets/Fonts/OpenSans"),
+                Font = Fonts.GetFont("Calibri.ttf"),
                 TextColor = Color.White,
-                ZIndex = 2
+                TextSize = 18,
+                ZIndex = 2,
             };
             RendererUI.Add(_counterText);
+            Console.WriteLine("Created and added fps counter to the ui renderer tracklist!");
         }
 
         private void SetupCursor()

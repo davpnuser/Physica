@@ -1,10 +1,11 @@
 ﻿
 // Renderer.cs
 
-using Microsoft.Xna.Framework.Graphics;
-using Physica.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
+
+using Microsoft.Xna.Framework.Graphics;
+
+using Physica.Interfaces;
 
 namespace Physica.Engine
 {
